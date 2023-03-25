@@ -2,12 +2,16 @@ package com.course_sys.controller;
 
 
 import com.course_sys.entity.User;
+import com.course_sys.repository.UserRepository;
 import com.course_sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserRestController {
@@ -34,6 +38,15 @@ public class UserRestController {
     public User addNewUser (@RequestBody User user){
         userService.saveUser(user);
         return user;
+    }
+
+    @PutMapping("/updatefirstname")
+    public void updateFirstName(@RequestBody String firstName){
+     userService.updateFirstName(firstName);
+    }
+    @PutMapping("/updatelastname")
+    public void updateLastName(@RequestBody String lastname){
+       userService.updateLastName(lastname);
     }
 
     @PutMapping("/users")

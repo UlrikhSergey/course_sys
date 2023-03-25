@@ -1,7 +1,9 @@
 package com.course_sys.entity;
 
 import jakarta.persistence.*;
+
 import java.util.Date;
+
 
 @Entity
 @Table(name = "messages")
@@ -14,8 +16,8 @@ public class Message {
     private String emailFrom;
     private String emailTo;
     private String text;
-    private final Date date = new Date();
     private boolean isRead;
+    private final Date date = new Date();
 
     public Message(String emailTo, String text) {
         this.emailTo = emailTo;

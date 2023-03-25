@@ -6,6 +6,8 @@ import com.course_sys.entity.User;
 import com.course_sys.repository.CourseRepository;
 import com.course_sys.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,5 +75,23 @@ public class UserServiceImpl implements UserService{
             user.setWishListCourses(courseSet);
         }
         return userRepository.save(user);
+    }
+
+    @Override
+    public void updateFirstName(String firstName) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByEmail(currentPrincipalName).get();
+        user.setFirstname(firstName);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateLastName(String lastname) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userRepository.findByEmail(currentPrincipalName).get();
+        user.setLastname(lastname);
+        userRepository.save(user);
     }
 }
