@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 public class CourseRestController {
+
     @Autowired
     private CourseService courseService;
 
