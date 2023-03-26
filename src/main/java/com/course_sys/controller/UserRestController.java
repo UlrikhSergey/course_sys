@@ -2,16 +2,13 @@ package com.course_sys.controller;
 
 
 import com.course_sys.entity.User;
-import com.course_sys.repository.UserRepository;
 import com.course_sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserRestController {
@@ -20,6 +17,7 @@ public class UserRestController {
     private UserService userService;
 
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users")
     public List<User> getAllUsers(){
         List<User> allUsers = userService.getAllUsers();
@@ -28,12 +26,14 @@ public class UserRestController {
         return allUsers;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Integer id){
        User user = userService.getUser(id);
        return user;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/users")
     public User addNewUser (@RequestBody User user){
         userService.saveUser(user);
@@ -49,11 +49,7 @@ public class UserRestController {
        userService.updateLastName(lastname);
     }
 
-    @PutMapping("/users")
-    public User updateUser (@RequestBody User user){
-        userService.saveUser(user);
-        return user;
-    }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/users/raiserating1/{id}")
     public User updateRatingOnePoint (@PathVariable Integer id){
       User user = userService.getUser(id);
@@ -61,18 +57,13 @@ public class UserRestController {
       userService.saveUser(user);
         return user;
     }
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/users/raiserating5/{id}")
     public User updateRatingFivePoint (@PathVariable Integer id){
         User user = userService.getUser(id);
         user.setRating(user.getRating() + 5);
         userService.saveUser(user);
         return user;
-    }
-
-    @DeleteMapping("/users/{id}")
-    public String deleteUser (@PathVariable Integer id){
-        userService.deleteUser(id);
-        return "User with id = " + id + " was deleted";
     }
 
     @PutMapping("/users/assignecourse/{empId}/{courseId}")

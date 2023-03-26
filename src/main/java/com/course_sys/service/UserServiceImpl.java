@@ -5,6 +5,7 @@ import com.course_sys.entity.Course;
 import com.course_sys.entity.User;
 import com.course_sys.repository.CourseRepository;
 import com.course_sys.repository.UserRepository;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

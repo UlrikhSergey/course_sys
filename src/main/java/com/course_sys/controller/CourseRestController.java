@@ -5,6 +5,7 @@ package com.course_sys.controller;
 import com.course_sys.entity.Course;
 import com.course_sys.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -33,20 +34,21 @@ public class CourseRestController {
         return course;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/courses")
     public Course addNewCourse (@RequestBody Course course){
         courseService.saveCourse(course);
         return course;
     }
 
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/courses")
     public Course updateBook (@RequestBody Course course){
         courseService.saveCourse(course);
         return course;
     }
 
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/courses/{id}")
     public String deleteCourse(@PathVariable Integer id){
         Course course = courseService.getCourse(id);
