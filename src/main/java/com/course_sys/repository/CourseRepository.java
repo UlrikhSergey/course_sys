@@ -9,14 +9,14 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {
-    public List<Course> findByArea(String area);
+    List<Course> findByArea(String area);
 
-    public List<Course> findByCostBefore(int cost);
+    List<Course> findByCostBefore(int cost);
 
-    public List<Course> findByCostAfter(int cost);
+    List<Course> findByCostAfter(int cost);
 
-    public List<Course> findByCostBetween(int costLower, int costHigher);
+    List<Course> findByCostBetween(int costLower, int costHigher);
 
-    public List<Course> findByNameContains(String name);
+    List<Course> findByNameContains(String name);
 
 }

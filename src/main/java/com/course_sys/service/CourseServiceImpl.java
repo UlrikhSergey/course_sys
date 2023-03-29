@@ -3,7 +3,6 @@ package com.course_sys.service;
 
 import com.course_sys.entity.Course;
 import com.course_sys.repository.CourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    public CourseServiceImpl(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
 
     @Override
     public List<Course> getAllCourses() {
@@ -42,31 +44,26 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findByArea(String area) {
-        List<Course> courses = courseRepository.findByArea(area);
-        return courses;
+        return courseRepository.findByArea(area);
     }
 
     @Override
     public List<Course> findByCostBefore(int cost) {
-        List<Course> courses = courseRepository.findByCostBefore(cost);
-        return courses;
+        return courseRepository.findByCostBefore(cost);
     }
 
     @Override
     public List<Course> findByCostAfter(int cost) {
-        List<Course> courses = courseRepository.findByCostAfter(cost);
-        return courses;
+        return courseRepository.findByCostAfter(cost);
     }
 
     @Override
     public List<Course> findByCostBetween(int costLower, int costHigher) {
-        List<Course> courses = courseRepository.findByCostBetween(costLower, costHigher);
-        return courses;
+        return courseRepository.findByCostBetween(costLower, costHigher);
     }
 
     @Override
     public List<Course> findByNameContains(String name) {
-        List<Course> courses = courseRepository.findByNameContains(name);
-        return courses;
+        return courseRepository.findByNameContains(name);
     }
 }

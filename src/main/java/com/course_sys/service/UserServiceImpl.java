@@ -16,11 +16,14 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
+
+    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository) {
+        this.userRepository = userRepository;
+        this.courseRepository = courseRepository;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -98,7 +101,6 @@ public class UserServiceImpl implements UserService {
     private User getUserByAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalName).get();
-        return user;
+        return userRepository.findByEmail(currentPrincipalName).get();
     }
 }

@@ -3,7 +3,6 @@ package com.course_sys.controller;
 
 import com.course_sys.entity.Course;
 import com.course_sys.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +12,11 @@ import java.util.List;
 @RestController
 public class CourseRestController {
 
-    @Autowired
+    private final CourseService courseService;
 
-    private CourseService courseService;
+    public CourseRestController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
 
     //Получаем список всех курсов на платформе
@@ -31,8 +32,7 @@ public class CourseRestController {
     //Получаем отдельно взятый курс по id
     @GetMapping("/courses/{id}")
     public Course getCourse(@PathVariable Integer id) {
-        Course course = courseService.getCourse(id);
-        return course;
+        return courseService.getCourse(id);
     }
 
     //Преподаватель добавляет курс
@@ -55,7 +55,6 @@ public class CourseRestController {
     @PreAuthorize("hasAuthority('TEACHER')")
     @DeleteMapping("/courses/{id}")
     public String deleteCourse(@PathVariable Integer id) {
-        Course course = courseService.getCourse(id);
         courseService.deleteCourse(id);
         return "Course with id = " + id + " was deleted";
     }

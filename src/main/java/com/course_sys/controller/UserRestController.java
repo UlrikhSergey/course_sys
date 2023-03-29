@@ -3,7 +3,6 @@ package com.course_sys.controller;
 
 import com.course_sys.entity.User;
 import com.course_sys.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +12,11 @@ import java.util.List;
 @RestController
 public class UserRestController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserRestController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     //Получаем всех пользователей
@@ -31,8 +33,7 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Integer id) {
-        User user = userService.getUser(id);
-        return user;
+        return userService.getUser(id);
     }
 
     //Добавляем пользователя

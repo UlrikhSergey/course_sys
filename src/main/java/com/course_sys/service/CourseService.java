@@ -6,22 +6,22 @@ import com.course_sys.entity.Course;
 import java.util.List;
 
 public interface CourseService {
-    public List<Course> getAllCourses();
+    List<Course> getAllCourses();
 
-    public void saveCourse(Course course);
+    void saveCourse(Course course);
 
-    public Course getCourse(Integer id);
+    Course getCourse(Integer id);
 
-    public void deleteCourse(Integer id);
+    void deleteCourse(Integer id);
 
-    public List<Course> findByArea(String area);
+    List<Course> findByArea(String area);
 
-    public List<Course> findByCostBefore(int cost);
+    List<Course> findByCostBefore(int cost);
 
-    public List<Course> findByCostAfter(int cost);
+    List<Course> findByCostAfter(int cost);
 
-    public List<Course> findByCostBetween(int costLower, int costHigher);
+    List<Course> findByCostBetween(int costLower, int costHigher);
 
-    public List<Course> findByNameContains(String name);
+    List<Course> findByNameContains(String name);
 
 }

@@ -3,7 +3,6 @@ package com.course_sys.controller;
 
 import com.course_sys.entity.Message;
 import com.course_sys.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/messages")
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    public MessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @PostMapping("/writemessage")
     public Message writeMessage(@RequestBody Message message) {
@@ -24,20 +26,17 @@ public class MessageController {
 
     @GetMapping("/getmessages")
     public List<Message> getAllMyMessages() {
-        List<Message> allMyMessages = messageService.getAllMyMessages();
-        return allMyMessages;
+        return messageService.getAllMyMessages();
     }
 
     @GetMapping("/getmessages/{id}")
     public Message getMessage(@PathVariable Integer id) {
-        Message message = messageService.getMessage(id);
-        return message;
+        return messageService.getMessage(id);
     }
 
     @PutMapping("/getmessages/{id}")
     public Message readMessage(@PathVariable Integer id) {
-        Message message = messageService.readMessage(id);
-        return message;
+        return messageService.readMessage(id);
     }
 
 }

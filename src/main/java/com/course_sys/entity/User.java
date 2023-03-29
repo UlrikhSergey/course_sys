@@ -21,21 +21,17 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-
 public class User implements UserDetails, Comparable<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String firstname;
-
     private String lastname;
     private String email;
 
     @JsonIgnore
     private String password;
-
     private int rating;
 
     @ManyToMany
