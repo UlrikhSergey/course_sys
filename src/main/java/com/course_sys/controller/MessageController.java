@@ -4,7 +4,6 @@ package com.course_sys.controller;
 import com.course_sys.entity.Message;
 import com.course_sys.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,14 +28,12 @@ public class MessageController {
         return allMyMessages;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/getmessages/{id}")
     public Message getMessage(@PathVariable Integer id) {
         Message message = messageService.getMessage(id);
         return message;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/getmessages/{id}")
     public Message readMessage(@PathVariable Integer id){
         Message message = messageService.readMessage(id);

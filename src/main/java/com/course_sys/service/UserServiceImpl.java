@@ -5,7 +5,6 @@ import com.course_sys.entity.Course;
 import com.course_sys.entity.User;
 import com.course_sys.repository.CourseRepository;
 import com.course_sys.repository.UserRepository;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,51 +47,59 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
+    //Метод для добавления курса в купленные
     @Override
-    public User assignCourse(Integer empId, Integer courseId) {
-        Set<Course> courseSet = null;
-        User user = userRepository.findById(empId).get();
+    public User assignCourse(Integer courseId) {
+        User user = getUserByAuth();
         Course course = courseRepository.findById(courseId).get();
-        courseSet = user.getAssignedCourses();
-        if (user.getWishListCourses().contains(course)){
-            user.getWishListCourses().remove(course);
+        Set <Course> assignSet = user.getAssignedCourses();
+        Set<Course> wishSet = user.getWishListCourses();
+        if (wishSet.contains(course)){
+            wishSet.remove(course);
+            user.setWishListCourses(wishSet);
         }
-        courseSet.add(course);
-        user.setAssignedCourses(courseSet);
+        assignSet.add(course);
+        user.setAssignedCourses(assignSet);
         return userRepository.save(user);
     }
 
+    //Метод для добавления курса в список избранных
     @Override
-    public User wishCourse(Integer empId, Integer courseId) {
-        Set<Course> courseSet = null;
-        User user = userRepository.findById(empId).get();
+    public User wishCourse(Integer courseId) {
+        User user = getUserByAuth();
         Course course = courseRepository.findById(courseId).get();
-        courseSet = user.getWishListCourses();
+        Set<Course> wishSet = user.getWishListCourses();
         if (user.getAssignedCourses().contains(course)){
-            System.out.println("Курс уже приобретен");
+            System.out.println("The course has already been purchased");
         }
         else {
-            courseSet.add(course);
-            user.setWishListCourses(courseSet);
+            wishSet.add(course);
+            user.setWishListCourses(wishSet);
         }
         return userRepository.save(user);
     }
 
+    //Метод для изменения имени
     @Override
     public void updateFirstName(String firstName) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalName).get();
+        User user = getUserByAuth();
         user.setFirstname(firstName);
         userRepository.save(user);
     }
 
+    //Метод для изменения фамилии
     @Override
     public void updateLastName(String lastname) {
+        User user = getUserByAuth();
+        user.setLastname(lastname);
+        userRepository.save(user);
+    }
+
+    //Метод для получения модели аутентифицированного пользователя
+    private User getUserByAuth (){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByEmail(currentPrincipalName).get();
-        user.setLastname(lastname);
-        userRepository.save(user);
+        return user;
     }
 }

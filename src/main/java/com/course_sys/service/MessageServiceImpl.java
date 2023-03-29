@@ -14,58 +14,67 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService{
     @Autowired
     private MessageRepository messageRepository;
+
+    //Метод для получения всех сообщений пользователя
     @Override
     public List<Message> getAllMyMessages() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
+        String email = getEmailFromAuth();
         List<Message> allMyMessages = messageRepository.findByEmailTo(email);
         return allMyMessages;
     }
 
+    //Метод для получения сообщения по id
     @Override
     public Message getMessage(Integer id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        List<Message> allMyMessages = messageRepository.findByEmailTo(email);
-        List<Integer> listUsersMessagesId = new ArrayList<>();
-        for (Message message : allMyMessages) {
-            listUsersMessagesId.add(message.getId());
-        }
-        Message message1 = null;
+        List<Integer> listUsersMessagesId = listOfMyMessagesId();
+
+        Message message = null;
         if (!listUsersMessagesId.contains(id)) {
             System.out.println("message not found");
         } else {
-            message1 = messageRepository.findById(id).get();
+            message = messageRepository.findById(id).get();
         }
-        return message1;
+        return message;
     }
 
+    //Метод для изменения статуса сообщения на "прочитано"
     @Override
     public Message readMessage(Integer id) {
+        List<Integer> listUsersMessagesId = listOfMyMessagesId();
+        Message message = null;
+        if (!listUsersMessagesId.contains(id)) {
+            System.out.println("message not found");
+        } else {
+            message = messageRepository.findById(id).get();
+            message.setRead(true);
+            messageRepository.save(message);
+        }
+        return message;
+    }
+
+    //Метод для создания сообщения
+    @Override
+    public Message writeMessage(Message message) {
+        String email = getEmailFromAuth();
+        message.setEmailFrom(email);
+        messageRepository.save(message);
+        return message;
+    }
+
+    //вспомогательный метод для получения email аутентифицированного пользователя
+    private String getEmailFromAuth(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
+        return authentication.getName();
+    }
+
+    //получение списка id сообщений, которые адресованы текущему аутентифицированному пользователю
+    private List<Integer> listOfMyMessagesId(){
+        String email = getEmailFromAuth();
         List<Message> allMyMessages = messageRepository.findByEmailTo(email);
         List<Integer> listUsersMessagesId = new ArrayList<>();
         for (Message message : allMyMessages) {
             listUsersMessagesId.add(message.getId());
         }
-        Message message1 = null;
-        if (!listUsersMessagesId.contains(id)) {
-            System.out.println("message not found");
-        } else {
-            message1 = messageRepository.findById(id).get();
-            message1.setRead(true);
-            messageRepository.save(message1);
-        }
-        return message1;
-    }
-
-    @Override
-    public Message writeMessage(Message message) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        message.setEmailFrom(currentPrincipalName);
-        messageRepository.save(message);
-        return message;
+        return listUsersMessagesId;
     }
 }

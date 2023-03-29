@@ -14,9 +14,9 @@ public interface UserService {
 
     void deleteUser(Integer id);
 
-    User assignCourse(Integer empId, Integer courseId);
+    User assignCourse(Integer courseId);
 
-    User wishCourse(Integer empId, Integer courseId);
+    User wishCourse(Integer courseId);
 
     void updateFirstName(String firstName);
     void updateLastName(String lastName);

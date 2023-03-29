@@ -4,10 +4,7 @@ package com.course_sys.entity;
 import com.course_sys.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +14,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Setter
 @Builder
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
+
 public class User implements UserDetails,Comparable<User> {
 
   @Id

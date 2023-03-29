@@ -19,6 +19,7 @@ public class CourseRestController {
     private CourseService courseService;
 
 
+    //Получаем список всех курсов на платформе
     @GetMapping("/courses")
     public List<Course> getAllCourses(){
 
@@ -28,27 +29,31 @@ public class CourseRestController {
         return allCourses;
     }
 
+    //Получаем отдельно взятый курс по id
     @GetMapping("/courses/{id}")
     public Course getCourse(@PathVariable Integer id){
         Course course = courseService.getCourse(id);
         return course;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //Преподаватель добавляет курс
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PostMapping("/courses")
     public Course addNewCourse (@RequestBody Course course){
         courseService.saveCourse(course);
         return course;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //Преподаватель изменяет данные о курсе
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PutMapping("/courses")
     public Course updateBook (@RequestBody Course course){
         courseService.saveCourse(course);
         return course;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //Удаление курса
+    @PreAuthorize("hasAuthority('TEACHER')")
     @DeleteMapping("/courses/{id}")
     public String deleteCourse(@PathVariable Integer id){
         Course course = courseService.getCourse(id);
@@ -56,27 +61,32 @@ public class CourseRestController {
         return "Course with id = " + id + " was deleted";
     }
 
+    //Фильтр курса по областям
     @GetMapping("/courses/areafilter/{area}")
     public List<Course> getCoursesByArea (@PathVariable String area){
         return courseService.findByArea(area.toUpperCase());
     }
 
+    //Фильтр курса по стоимости (все, что дороже)
     @GetMapping("/courses/costfilterafter/{cost}")
     public List<Course> getCoursesCostAfter (@PathVariable int cost){
         return courseService.findByCostAfter(cost);
     }
 
+    //Фильтр курса по стоимости (все, что дешевле)
     @GetMapping("/courses/costfilterbefore/{cost}")
     public List<Course> getCoursesCostBefore (@PathVariable int cost){
         return courseService.findByCostBefore(cost);
     }
 
+    //Фильтр курса по стоимости (все, что в промежутке между двумя ценами)
     @GetMapping("/courses/costfilterbetween/{costLower}/{costHigher}")
     public List<Course> getCoursesCostBefore (@PathVariable int costLower,
                                               @PathVariable int costHigher){
         return courseService.findByCostBetween(costLower,costHigher);
     }
 
+    //Фильтр курса по названию
     @GetMapping("/courses/namecontainsfilter/{name}")
     public List<Course> getCoursesNameContains (@PathVariable String name){
         return courseService.findByNameContains(name);

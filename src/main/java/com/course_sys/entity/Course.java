@@ -2,19 +2,16 @@ package com.course_sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@Builder
-@NoArgsConstructor
+@Setter
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "courses")
 public class Course implements Comparable<Course>{
@@ -43,6 +40,6 @@ public class Course implements Comparable<Course>{
 
     @Override
     public int compareTo(Course o) {
-        return (int) (o.id - this.id);
+        return  o.id - this.id;
     }
 }

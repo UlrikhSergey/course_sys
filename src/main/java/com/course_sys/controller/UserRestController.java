@@ -17,6 +17,7 @@ public class UserRestController {
     private UserService userService;
 
 
+    //Получаем всех пользователей
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users")
     public List<User> getAllUsers(){
@@ -26,6 +27,7 @@ public class UserRestController {
         return allUsers;
     }
 
+    //Получаем пользователя по id
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Integer id){
@@ -33,6 +35,7 @@ public class UserRestController {
        return user;
     }
 
+    //Добавляем пользователя
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/users")
     public User addNewUser (@RequestBody User user){
@@ -40,16 +43,20 @@ public class UserRestController {
         return user;
     }
 
+    //Метод для изменения имени
     @PutMapping("/updatefirstname")
     public void updateFirstName(@RequestBody String firstName){
      userService.updateFirstName(firstName);
     }
+
+    //Метод для изменения фамилии
     @PutMapping("/updatelastname")
     public void updateLastName(@RequestBody String lastname){
        userService.updateLastName(lastname);
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //Увеличиваем рейтинг ученику на 1 пункт за легкое задание
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PutMapping("/users/raiserating1/{id}")
     public User updateRatingOnePoint (@PathVariable Integer id){
       User user = userService.getUser(id);
@@ -57,7 +64,9 @@ public class UserRestController {
       userService.saveUser(user);
         return user;
     }
-    @PreAuthorize("hasAuthority('ADMIN')")
+
+    //Увеличиваем рейтинг ученику на 5 пунктов за сложное задание
+    @PreAuthorize("hasAuthority('TEACHER')")
     @PutMapping("/users/raiserating5/{id}")
     public User updateRatingFivePoint (@PathVariable Integer id){
         User user = userService.getUser(id);
@@ -66,16 +75,16 @@ public class UserRestController {
         return user;
     }
 
-    @PutMapping("/users/assignecourse/{empId}/{courseId}")
-    public User assignCourse (@PathVariable Integer empId,
-                              @PathVariable Integer courseId){
-        return userService.assignCourse(empId,courseId);
+    //Покупка курса
+    @PutMapping("/users/assignecourse/{courseId}")
+    public User assignCourse (@PathVariable Integer courseId){
+        return userService.assignCourse(courseId);
     }
 
-    @PutMapping("/users/wishcourse/{empId}/{courseId}")
-    public User wishCourse (@PathVariable Integer empId,
-                              @PathVariable Integer courseId){
-        return userService.wishCourse(empId,courseId);
+    //Добавление курса в избранное
+    @PutMapping("/users/wishcourse/{courseId}")
+    public User wishCourse (@PathVariable Integer courseId){
+        return userService.wishCourse(courseId);
     }
 
 }
