@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUser(Integer id) {
         User user = null;
-        Optional<User> optional =  userRepository.findById(id);
-        if(optional.isPresent()){
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent()) {
             user = optional.get();
         }
         return user;
@@ -52,9 +52,9 @@ public class UserServiceImpl implements UserService{
     public User assignCourse(Integer courseId) {
         User user = getUserByAuth();
         Course course = courseRepository.findById(courseId).get();
-        Set <Course> assignSet = user.getAssignedCourses();
+        Set<Course> assignSet = user.getAssignedCourses();
         Set<Course> wishSet = user.getWishListCourses();
-        if (wishSet.contains(course)){
+        if (wishSet.contains(course)) {
             wishSet.remove(course);
             user.setWishListCourses(wishSet);
         }
@@ -69,10 +69,9 @@ public class UserServiceImpl implements UserService{
         User user = getUserByAuth();
         Course course = courseRepository.findById(courseId).get();
         Set<Course> wishSet = user.getWishListCourses();
-        if (user.getAssignedCourses().contains(course)){
+        if (user.getAssignedCourses().contains(course)) {
             System.out.println("The course has already been purchased");
-        }
-        else {
+        } else {
             wishSet.add(course);
             user.setWishListCourses(wishSet);
         }
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService{
     }
 
     //Метод для получения модели аутентифицированного пользователя
-    private User getUserByAuth (){
+    private User getUserByAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userRepository.findByEmail(currentPrincipalName).get();

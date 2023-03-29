@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
@@ -27,8 +27,8 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public Course getCourse(Integer id) {
         Course course = null;
-        Optional<Course> optional =  courseRepository.findById(id);
-        if(optional.isPresent()){
+        Optional<Course> optional = courseRepository.findById(id);
+        if (optional.isPresent()) {
             course = optional.get();
         }
         return course;
@@ -42,8 +42,8 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<Course> findByArea(String area) {
-       List<Course> courses =  courseRepository.findByArea(area);
-       return courses;
+        List<Course> courses = courseRepository.findByArea(area);
+        return courses;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<Course> findByCostBetween(int costLower, int costHigher) {
-        List<Course> courses = courseRepository.findByCostBetween(costLower,costHigher);
+        List<Course> courses = courseRepository.findByCostBetween(costLower, costHigher);
         return courses;
     }
 

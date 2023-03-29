@@ -14,13 +14,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "courses")
-public class Course implements Comparable<Course>{
+public class Course implements Comparable<Course> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column (name = "area")
+    @Column(name = "area")
     private String area;
 
     @Column(name = "name")
@@ -40,6 +40,6 @@ public class Course implements Comparable<Course>{
 
     @Override
     public int compareTo(Course o) {
-        return  o.id - this.id;
+        return o.id - this.id;
     }
 }

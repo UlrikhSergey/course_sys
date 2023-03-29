@@ -26,5 +26,4 @@ public class Message {
     private final Date date = new Date();
 
 
-
 }

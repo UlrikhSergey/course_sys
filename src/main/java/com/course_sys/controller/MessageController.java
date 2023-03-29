@@ -35,7 +35,7 @@ public class MessageController {
     }
 
     @PutMapping("/getmessages/{id}")
-    public Message readMessage(@PathVariable Integer id){
+    public Message readMessage(@PathVariable Integer id) {
         Message message = messageService.readMessage(id);
         return message;
     }

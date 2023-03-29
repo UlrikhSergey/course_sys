@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MessageServiceImpl implements MessageService{
+public class MessageServiceImpl implements MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
@@ -62,13 +62,13 @@ public class MessageServiceImpl implements MessageService{
     }
 
     //вспомогательный метод для получения email аутентифицированного пользователя
-    private String getEmailFromAuth(){
+    private String getEmailFromAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
 
     //получение списка id сообщений, которые адресованы текущему аутентифицированному пользователю
-    private List<Integer> listOfMyMessagesId(){
+    private List<Integer> listOfMyMessagesId() {
         String email = getEmailFromAuth();
         List<Message> allMyMessages = messageRepository.findByEmailTo(email);
         List<Integer> listUsersMessagesId = new ArrayList<>();
