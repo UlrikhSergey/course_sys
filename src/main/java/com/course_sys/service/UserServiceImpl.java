@@ -5,7 +5,6 @@ import com.course_sys.entity.Course;
 import com.course_sys.entity.User;
 import com.course_sys.repository.CourseRepository;
 import com.course_sys.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User assignCourse(Integer courseId) {
         User user = getUserByAuth();
-        Course course = courseRepository.findById(courseId).get();
+        Course course = null;
+        Optional<Course> optional = courseRepository.findById(courseId);
+        if (optional.isPresent()) {
+            course = optional.get();
+        }
         Set<Course> assignSet = user.getAssignedCourses();
         Set<Course> wishSet = user.getWishListCourses();
         if (wishSet.contains(course)) {
@@ -70,7 +73,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User wishCourse(Integer courseId) {
         User user = getUserByAuth();
-        Course course = courseRepository.findById(courseId).get();
+        Course course = null;
+        Optional<Course> optional = courseRepository.findById(courseId);
+        if (optional.isPresent()) {
+            course = optional.get();
+        }
         Set<Course> wishSet = user.getWishListCourses();
         if (user.getAssignedCourses().contains(course)) {
             System.out.println("The course has already been purchased");
@@ -101,6 +108,11 @@ public class UserServiceImpl implements UserService {
     private User getUserByAuth() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        return userRepository.findByEmail(currentPrincipalName).get();
+        User user = null;
+        Optional<User> optional = userRepository.findByEmail(currentPrincipalName);
+        if (optional.isPresent()) {
+            user = optional.get();
+        }
+        return user;
     }
 }
