@@ -6,6 +6,7 @@ import lombok.*;
 
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Setter
@@ -13,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "courses")
+@Table(name = "courses",uniqueConstraints = { @UniqueConstraint(name = "UniqueNumberAndStatus", columnNames = { "name" }) })
 public class Course implements Comparable<Course> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,12 @@ public class Course implements Comparable<Course> {
     private String area;
     private String name;
     private int cost;
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, area, name, cost, users, usersWishList);
+    }
 
     @JsonIgnore
     @ManyToMany(mappedBy = "assignedCourses")
