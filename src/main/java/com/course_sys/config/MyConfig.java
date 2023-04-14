@@ -13,7 +13,7 @@ public class MyConfig {
         JedisConnectionFactory jedisConFactory
                 = new JedisConnectionFactory();
         jedisConFactory.setHostName("localhost");
-        jedisConFactory.setPort(1234);
+        jedisConFactory.setPort(6379);
         return jedisConFactory;
     }
 
