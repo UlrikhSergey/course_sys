@@ -8,7 +8,7 @@ import java.util.List;
 public interface CourseService {
     List<Course> getAllCourses();
 
-    void saveCourse(Course course);
+    Course saveCourse(Course course);
 
     Course getCourse(Integer id);
 

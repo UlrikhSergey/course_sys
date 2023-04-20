@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -41,5 +42,17 @@ public class Course implements Comparable<Course> {
     @Override
     public int compareTo(Course o) {
         return o.id - this.id;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", area='" + area + '\'' +
+                ", name='" + name + '\'' +
+                ", cost=" + cost +
+                ", users=" + users +
+                ", usersWishList=" + usersWishList +
+                '}';
     }
 }

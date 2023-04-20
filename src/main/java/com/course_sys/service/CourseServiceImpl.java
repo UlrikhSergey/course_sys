@@ -2,7 +2,10 @@ package com.course_sys.service;
 
 
 import com.course_sys.entity.Course;
+import com.course_sys.exception.AlreadyExistException;
+import com.course_sys.exception.CourseNotFoundException;
 import com.course_sys.repository.CourseRepository;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,20 +24,30 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findAll();
     }
 
+    @SneakyThrows
     @Override
-    public void saveCourse(Course course) {
-        courseRepository.save(course);
+    public Course saveCourse(Course course) {
+
+        Optional<Course> savedCourse = courseRepository.findCourseByName(course.getName());
+        if (savedCourse.isPresent()) {
+            throw new AlreadyExistException("Course already exist");
+        }
+        else {
+            return courseRepository.save(course);
+        }
     }
 
+    @SneakyThrows
     @Override
     public Course getCourse(Integer id) {
         Course course = null;
         Optional<Course> optional = courseRepository.findById(id);
         if (optional.isPresent()) {
-            course = optional.get();
+          return optional.get();
         }
-        return course;
-
+        else {
+            throw new CourseNotFoundException("Course with id - " + id + " not found");
+        }
     }
 
     @Override

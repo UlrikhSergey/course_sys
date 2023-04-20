@@ -2,7 +2,6 @@ package com.course_sys.service;
 
 import com.course_sys.entity.Message;
 import com.course_sys.repository.MessageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,8 +11,11 @@ import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
-    @Autowired
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
+
+    public MessageServiceImpl(MessageRepository messageRepository) {
+        this.messageRepository = messageRepository;
+    }
 
     //Метод для получения всех сообщений пользователя
     @Override
