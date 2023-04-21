@@ -47,7 +47,7 @@ public class CourseRestController {
     //Преподаватель изменяет данные о курсе
     @PreAuthorize("hasAuthority('TEACHER')")
     @PutMapping
-    public Course updateBook(@RequestBody Course course) {
+    public Course updateCourse(@RequestBody Course course) {
         courseService.saveCourse(course);
         return course;
     }

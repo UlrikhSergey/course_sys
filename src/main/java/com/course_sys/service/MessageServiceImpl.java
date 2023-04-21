@@ -1,7 +1,9 @@
 package com.course_sys.service;
 
 import com.course_sys.entity.Message;
+import com.course_sys.exception.MessageNotFoundException;
 import com.course_sys.repository.MessageRepository;
+import lombok.SneakyThrows;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,37 +23,40 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> getAllMyMessages() {
         String email = getEmailFromAuth();
-        List<Message> allMyMessages = messageRepository.findByEmailTo(email);
-        return allMyMessages;
+        return messageRepository.findByEmailTo(email);
     }
 
     //Метод для получения сообщения по id
+    @SneakyThrows
     @Override
     public Message getMessage(Integer id) {
         List<Integer> listUsersMessagesId = listOfMyMessagesId();
 
-        Message message = null;
+        Message message;
         if (!listUsersMessagesId.contains(id)) {
-            System.out.println("message not found");
+            throw new MessageNotFoundException("Message not found");
         } else {
             message = messageRepository.findById(id).get();
+            return message;
         }
-        return message;
+
     }
 
     //Метод для изменения статуса сообщения на "прочитано"
+    @SneakyThrows
     @Override
     public Message readMessage(Integer id) {
         List<Integer> listUsersMessagesId = listOfMyMessagesId();
-        Message message = null;
+        Message message;
         if (!listUsersMessagesId.contains(id)) {
-            System.out.println("message not found");
+            throw new MessageNotFoundException("Message not found");
         } else {
             message = messageRepository.findById(id).get();
             message.setRead(true);
             messageRepository.save(message);
+            return message;
         }
-        return message;
+
     }
 
     //Метод для создания сообщения

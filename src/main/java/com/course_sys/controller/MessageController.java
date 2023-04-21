@@ -17,24 +17,24 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/writemessage")
+    @PostMapping
     public Message writeMessage(@RequestBody Message message) {
         messageService.writeMessage(message);
         return message;
     }
 
 
-    @GetMapping("/getmessages")
+    @GetMapping
     public List<Message> getAllMyMessages() {
         return messageService.getAllMyMessages();
     }
 
-    @GetMapping("/getmessages/{id}")
+    @GetMapping("/{id}")
     public Message getMessage(@PathVariable Integer id) {
         return messageService.getMessage(id);
     }
 
-    @PutMapping("/getmessages/{id}")
+    @PutMapping("/{id}")
     public Message readMessage(@PathVariable Integer id) {
         return messageService.readMessage(id);
     }

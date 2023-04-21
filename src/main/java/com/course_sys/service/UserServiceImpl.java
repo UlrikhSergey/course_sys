@@ -3,8 +3,11 @@ package com.course_sys.service;
 
 import com.course_sys.entity.Course;
 import com.course_sys.entity.User;
+import com.course_sys.exception.AlreadyExistException;
+import com.course_sys.exception.UserNotFoundException;
 import com.course_sys.repository.CourseRepository;
 import com.course_sys.repository.UserRepository;
+import lombok.SneakyThrows;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -29,19 +32,30 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @SneakyThrows
     @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public User saveUser(User user) {
+        Optional<User> savedUser = userRepository.findByEmail(user.getEmail());
+        if (savedUser.isPresent()) {
+            throw new AlreadyExistException("User already exist");
+        }
+        else {
+            return userRepository.save(user);
+        }
+
     }
 
+    @SneakyThrows
     @Override
     public User getUser(Integer id) {
-        User user = null;
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()) {
-            user = optional.get();
+            return optional.get();
         }
-        return user;
+        else {
+            throw new UserNotFoundException("User with id - " + id + " not found");
+        }
+
     }
 
     @Override

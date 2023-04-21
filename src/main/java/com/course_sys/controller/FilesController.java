@@ -45,6 +45,7 @@ public class FilesController {
                     .body(String.format("Could not upload the file: %s!", file.getOriginalFilename()));
         }
     }
+    @PreAuthorize("hasAuthority('TEACHER')")
     @GetMapping
     public List<FileEntity> getAllFiles (){
         return (List<FileEntity>) fileRepository.findAll();

@@ -4,26 +4,25 @@ import com.course_sys.entity.Course;
 import com.course_sys.exception.AlreadyExistException;
 import com.course_sys.exception.CourseNotFoundException;
 import com.course_sys.repository.CourseRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
-
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -66,7 +65,6 @@ class CourseServiceImplTest {
         given(courseRepository.findAll()).willReturn(Collections.emptyList());
         List<Course> courseList = courseService.getAllCourses();
         assertThat(courseList).isEmpty();
-        assertThat(courseList.size()).isEqualTo(0);
     }
 
     @Test
@@ -84,9 +82,7 @@ class CourseServiceImplTest {
         given(courseRepository.findById(course1.getId()))
                 .willReturn(Optional.of(course1));
 
-        assertThrows(AlreadyExistException.class, () -> {
-            courseService.saveCourse(course1);
-        });
+        assertThrows(AlreadyExistException.class, () -> courseService.saveCourse(course1));
     }
 
     @Test
@@ -104,9 +100,7 @@ class CourseServiceImplTest {
     void getCourseWhenCourseNotFound() {
         given(courseRepository.findById(1)).willReturn(Optional.empty());
 
-        assertThrows(CourseNotFoundException.class, () ->{
-            courseService.getCourse(1);
-        });
+        assertThrows(CourseNotFoundException.class, () -> courseService.getCourse(1));
     }
 
     @Test

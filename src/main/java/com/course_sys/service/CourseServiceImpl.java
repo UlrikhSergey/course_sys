@@ -40,13 +40,12 @@ public class CourseServiceImpl implements CourseService {
     @SneakyThrows
     @Override
     public Course getCourse(Integer id) {
-        Course course = null;
         Optional<Course> optional = courseRepository.findById(id);
         if (optional.isPresent()) {
           return optional.get();
         }
         else {
-            throw new CourseNotFoundException("FileEntity with id - " + id + " not found");
+            throw new CourseNotFoundException("Course with id - " + id + " not found");
         }
     }
 
