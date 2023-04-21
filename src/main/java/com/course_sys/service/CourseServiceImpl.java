@@ -46,7 +46,7 @@ public class CourseServiceImpl implements CourseService {
           return optional.get();
         }
         else {
-            throw new CourseNotFoundException("Course with id - " + id + " not found");
+            throw new CourseNotFoundException("FileEntity with id - " + id + " not found");
         }
     }
 

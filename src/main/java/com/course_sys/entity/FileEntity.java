@@ -1,10 +1,16 @@
 package com.course_sys.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.data.redis.core.RedisHash;
 
 
 @RedisHash("File")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FileEntity {
 
     private String id;
