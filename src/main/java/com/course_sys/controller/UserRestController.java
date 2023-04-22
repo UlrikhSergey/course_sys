@@ -24,10 +24,7 @@ public class UserRestController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<User> getAllUsers() {
-        List<User> allUsers = userService.getAllUsers();
-        Collections.sort(allUsers);
-
-        return allUsers;
+        return userService.getAllUsers();
     }
 
     //Получаем пользователя по id

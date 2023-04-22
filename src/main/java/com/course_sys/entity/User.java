@@ -91,6 +91,6 @@ public class User implements UserDetails, Comparable<User> {
 
     @Override
     public int compareTo(User o) {
-        return (int) (this.id - o.id);
+        return this.id - o.id;
     }
 }

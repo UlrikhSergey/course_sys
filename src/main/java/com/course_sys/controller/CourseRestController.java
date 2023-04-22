@@ -80,7 +80,7 @@ public class CourseRestController {
 
     //Фильтр курса по стоимости (все, что в промежутке между двумя ценами)
     @GetMapping(params = {"min", "max"})
-    public List<Course> getCoursesCostBefore(@RequestParam("min") int costLower,
+    public List<Course> getCoursesCostBetween(@RequestParam("min") int costLower,
                                              @RequestParam("max") int costHigher) {
         return courseService.findByCostBetween(costLower, costHigher);
     }
