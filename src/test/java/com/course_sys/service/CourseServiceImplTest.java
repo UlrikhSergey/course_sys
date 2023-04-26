@@ -79,7 +79,7 @@ class CourseServiceImplTest {
     }
     @Test
     void saveCourseWhenCourseAlreadyExist() {
-        given(courseRepository.findById(course1.getId()))
+        given(courseRepository.findCourseByName(course1.getName()))
                 .willReturn(Optional.of(course1));
 
         assertThrows(AlreadyExistException.class, () -> courseService.saveCourse(course1));

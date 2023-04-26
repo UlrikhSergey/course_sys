@@ -18,7 +18,7 @@ public interface UserService {
 
     User wishCourse(Integer courseId);
 
-    void updateFirstName(String firstName);
+    User updateFirstName(String firstName);
 
-    void updateLastName(String lastName);
+    User updateLastName(String lastName);
 }

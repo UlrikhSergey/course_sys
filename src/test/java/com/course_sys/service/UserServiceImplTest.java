@@ -81,7 +81,7 @@ class UserServiceImplTest {
         assertThat(savedUser).isNotNull();
     }
     @Test
-    void saveUserWhenCourseAlreadyExist() {
+    void saveUserWhenUserAlreadyExist() {
         given(userRepository.findByEmail(user1.getEmail()))
                 .willReturn(Optional.of(user1));
 

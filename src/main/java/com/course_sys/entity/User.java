@@ -93,4 +93,20 @@ public class User implements UserDetails, Comparable<User> {
     public int compareTo(User o) {
         return this.id - o.id;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", rating=" + rating +
+                ", assignedCourses=" + assignedCourses +
+                ", wishListCourses=" + wishListCourses +
+                ", role=" + role +
+                ", tokens=" + tokens +
+                '}';
+    }
 }

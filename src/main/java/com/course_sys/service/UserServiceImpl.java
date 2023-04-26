@@ -38,8 +38,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> savedUser = userRepository.findByEmail(user.getEmail());
         if (savedUser.isPresent()) {
             throw new AlreadyExistException("User already exist");
-        }
-        else {
+        } else {
             return userRepository.save(user);
         }
 
@@ -51,8 +50,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optional = userRepository.findById(id);
         if (optional.isPresent()) {
             return optional.get();
-        }
-        else {
+        } else {
             throw new UserNotFoundException("User with id - " + id + " not found");
         }
 
@@ -104,18 +102,20 @@ public class UserServiceImpl implements UserService {
 
     //Метод для изменения имени
     @Override
-    public void updateFirstName(String firstName) {
+    public User updateFirstName(String firstName) {
         User user = getUserByAuth();
         user.setFirstname(firstName);
         userRepository.save(user);
+        return user;
     }
 
     //Метод для изменения фамилии
     @Override
-    public void updateLastName(String lastname) {
+    public User updateLastName(String lastname) {
         User user = getUserByAuth();
         user.setLastname(lastname);
         userRepository.save(user);
+        return user;
     }
 
     //Метод для получения модели аутентифицированного пользователя
