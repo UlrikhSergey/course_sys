@@ -1,17 +1,13 @@
 package com.course_sys.config;
 
 
-import io.swagger.models.HttpMethod;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,7 +35,7 @@ public class SecurityConfiguration  {
                 .requestMatchers(
                         "/auth/**",
                         "/api/v2/api-docs",
-                        "/v3/api-docs",
+                        "/v3/api-docs/**",
                         "/swagger-resources/**",
                         "/swagger-ui.html**",
                         "/swagger-ui/index.html",
@@ -63,10 +59,7 @@ public class SecurityConfiguration  {
 
         return http.build();
     }
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/swagger-ui/");
-    }
+
 
 
 }
