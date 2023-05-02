@@ -1,14 +1,11 @@
 package com.course_sys.service;
 
-import com.course_sys.entity.Course;
 import com.course_sys.entity.FileEntity;
-import com.course_sys.exception.CourseNotFoundException;
 import com.course_sys.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;

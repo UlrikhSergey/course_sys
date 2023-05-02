@@ -2,9 +2,7 @@ package com.course_sys.controller;
 
 
 import com.course_sys.entity.Message;
-import com.course_sys.repository.MessageRepository;
 import com.course_sys.service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
