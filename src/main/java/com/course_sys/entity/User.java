@@ -53,6 +53,7 @@ public class User implements UserDetails, Comparable<User> {
     private List<Token> tokens;
 
 
+    //возвращает список ролей у пользователя
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
