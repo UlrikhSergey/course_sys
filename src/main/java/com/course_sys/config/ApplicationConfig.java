@@ -20,6 +20,7 @@ public class ApplicationConfig {
 
     private final UserRepository repository;
 
+    //Для получения учетных данных пользователя из базы данных
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByEmail(username)
