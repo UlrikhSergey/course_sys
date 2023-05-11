@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration  {
+public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -28,7 +28,7 @@ public class SecurityConfiguration  {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
+//отключаем csrf механизм токенов, т.к. используем другой подход - jwt
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
@@ -59,7 +59,6 @@ public class SecurityConfiguration  {
 
         return http.build();
     }
-
 
 
 }
